@@ -8,7 +8,7 @@
     # The text we are looking for in the webpage content.
     search_text: "Shaping the future together"
     # Specify the path where you want to store the CSV file.
-    csv_file: "./webpage_results.csv"
+    csv_file: "./webcheck-save-output.csv"
 
   tasks:
     - name: Retrieve webpage content
