@@ -1,0 +1,44 @@
+---
+- name: Check webpage for text and save results to CSV
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    target_url: "http://atos.net"
+    # The text we are looking for in the webpage content.
+    search_text: "Shaping the future together"
+    # Specify the path where you want to store the CSV file.
+    csv_file: "./webpage_results.csv"
+
+  tasks:
+    - name: Retrieve webpage content
+      ansible.builtin.uri:
+        url: "{{ target_url }}"
+        method: GET
+        return_content: yes
+      register: webpage_response
+
+    - name: Check for the text in the webpage content
+      set_fact:
+        text_found: "{{ 'true' if (search_text in webpage_response.content) else 'false' }}"
+
+    - name: Ensure CSV file exists with header
+      # This will create the file with a header if it does not already exist.
+      ansible.builtin.copy:
+        dest: "{{ csv_file }}"
+        content: "timestamp,url,text_found\n"
+        force: no
+
+    - name: Append check result to CSV file
+      ansible.builtin.shell: |
+        echo "{{ lookup('pipe','date +%Y-%m-%dT%H:%M:%S') }},{{ target_url }},{{ text_found }}" >> {{ csv_file }}
+      args:
+        executable: /bin/bash
+
+    - name: Display CSV file contents (optional)
+      ansible.builtin.command: cat {{ csv_file }}
+      register: csv_content
+
+    - name: Show CSV content
+      ansible.builtin.debug:
+        msg: "{{ csv_content.stdout }}"
