@@ -35,7 +35,7 @@
       ansible.builtin.shell: |
         echo "{{ lookup('pipe','date +%Y-%m-%dT%H:%M:%S') }},{{ target_url }},{{ text_found }}" >> {{ csv_file }}
       args:
-        executable: /bin/bash
+        executable: /bin/sh
 
     - name: Display CSV file contents (optional)
       ansible.builtin.command: cat {{ csv_file }}
