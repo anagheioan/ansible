@@ -4,8 +4,6 @@
   gather_facts: no
 
   vars:
-    #added this shell to avoid "msg": "[Errno 2] No such file or directory: b'/bin/bash'"
-    ansible_shell_executable: /bin/sh
     target_url: "http://atos.net"
     # The text we are looking for in the webpage content.
     search_text: "Shaping the future together"
@@ -35,6 +33,7 @@
       ansible.builtin.shell: |
         echo "{{ lookup('pipe','date +%Y-%m-%dT%H:%M:%S') }},{{ target_url }},{{ text_found }}" >> {{ csv_file }}
       args:
+        #shell changed from '/bin/bash' to '/bin/sh' to avoid "msg": "[Errno 2] No such file or directory: b'/bin/bash'"
         executable: /bin/sh
 
     - name: Display CSV file contents (optional)
