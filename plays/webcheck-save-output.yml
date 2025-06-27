@@ -4,6 +4,8 @@
   gather_facts: no
 
   vars:
+    #added this shell to avoid "msg": "[Errno 2] No such file or directory: b'/bin/bash'"
+    ansible_shell_executable: /bin/sh
     target_url: "http://atos.net"
     # The text we are looking for in the webpage content.
     search_text: "Shaping the future together"
