@@ -4,7 +4,7 @@
   gather_facts: no
 
   vars:
-    target_url: "http://atos.net"
+    target_url: "http://atos.net/404"
     # The text we are looking for in the webpage content.
     search_text: "Shaping the future together"
     # Specify the path where you want to store the CSV file.
