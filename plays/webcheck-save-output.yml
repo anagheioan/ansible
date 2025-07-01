@@ -35,7 +35,7 @@
 
     - name: Append check result to CSV file
       ansible.builtin.shell: |
-        echo "{{ lookup('pipe','date +%Y-%m-%dT%H:%M:%S') }},{{ target_url }},{{ text_found }}" >> {{ csv_file }}
+        echo "{{ lookup('pipe','date +%Y-%m-%dT%H:%M:%S') }},{{ target_url }},{{ text_found }},{{ price }}" >> {{ csv_file }}
       args:
         #shell changed from '/bin/bash' to '/bin/sh' to avoid "msg": "[Errno 2] No such file or directory: b'/bin/bash'"
         executable: /bin/sh
