@@ -4,9 +4,9 @@
   gather_facts: no
 
   vars:
-    target_url: "http://atos.net/404"
+    target_url: "https://www.emag.ro/telefon-mobil-google-pixel-8-128gb-8gb-ram-5g-obsidian-ga05803-gb/pd/DFRGP1YBM/"
     # The text we are looking for in the webpage content.
-    search_text: "Shaping the future together"
+    search_text: "Telefon mobil Google Pixel 8, 128GB, 8GB RAM, 5G, Obsidia"
     # Specify the path where you want to store the CSV file.
     csv_file: "/play/webcheck-save-output.csv"
 
@@ -21,6 +21,10 @@
     - name: Check for the text in the webpage content
       set_fact:
         text_found: "{{ 'true' if (search_text in webpage_response.content) else 'false' }}"
+
+    - name: Extract <price> using regex
+      set_fact:
+        page_title: "{{ webpage_response.content | regex_search('<p class="product-new-price has-deal" data-test="main-price">(.*?)<sup><small class="mf-decimal">,</small>00</sup> <span>Lei</span></p>', '\\1') }}"
 
     - name: Ensure CSV file exists with header
       # This will create the file with a header if it does not already exist.
