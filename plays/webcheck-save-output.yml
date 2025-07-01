@@ -24,13 +24,13 @@
 
     - name: Extract <price> using regex
       set_fact:
-        page_title: "{{ webpage_response.content | regex_search('<p class="product-new-price has-deal" data-test="main-price">(.*?)<sup><small class="mf-decimal">,</small>00</sup> <span>Lei</span></p>', '\\1') }}"
+        price: "{{ webpage_response.content | regex_search('<p class=\"product-new-price has-deal\" data-test=\"main-price\">(.*?)<sup><small class=\"mf-decimal\">,</small>00</sup> <span>Lei</span></p>', '\\1') }}"
 
     - name: Ensure CSV file exists with header
       # This will create the file with a header if it does not already exist.
       ansible.builtin.copy:
         dest: "{{ csv_file }}"
-        content: "timestamp,url,text_found\n"
+        content: "timestamp,url,text_found,price\n"
         force: no
 
     - name: Append check result to CSV file
