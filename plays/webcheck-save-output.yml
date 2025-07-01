@@ -24,7 +24,8 @@
 
     - name: Extract <price> using regex
       set_fact:
-        price: "{{ webpage_response.content | regex_search('<p class=\"product-new-price has-deal\" data-test=\"main-price\">(.*?)<sup><small class=\"mf-decimal\">,</small>00</sup> <span>Lei</span></p>', '\\1') }}"
+        #price: "{{ webpage_response.content | regex_search('<p class=\"product-new-price has-deal\" data-test=\"main-price\">(.*?)<sup><small class=\"mf-decimal\">,</small>00</sup> <span>Lei</span></p>', '\\1') }}"
+        price: "{{ webpage_response.content | regex_search('<title>(.*?)</title>', '\\1') }}"
 
     - name: Ensure CSV file exists with header
       # This will create the file with a header if it does not already exist.
